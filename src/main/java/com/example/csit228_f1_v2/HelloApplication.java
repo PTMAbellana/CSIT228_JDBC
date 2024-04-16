@@ -101,13 +101,47 @@ public class HelloApplication extends Application {
         Button btnLogin = new Button("Log In");
         btnLogin.setFont(Font.font(40));
         grid.add(btnLogin, 0, 3, 2, 1);
+        Text check = new Text("Message:");
+        txtWelcome.setFont(Font.font("Chiller", FontWeight.EXTRA_BOLD, 69));
+        txtWelcome.setFill(Color.RED);
+        txtWelcome.setTextAlignment(TextAlignment.CENTER);
+        grid.add(check, 0, 5, 3, 1);
 
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+            HelloController hc = new HelloController();
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String username = tfUsername.getText();
+                String password = pfPassword.getText();
+                if(hc.readData(username,password)){
+                    try {
+                        Parent p = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+                        Scene s = new Scene(p);
+                        stage.setScene(s);
+                        stage.show();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else{
+                    check.setText("Invalid username/password");
+//                    actionTarget.setOpacity(1);
+                }
+            }
+        });
+        Button btnRegister = new Button("Register");
+        btnRegister.setFont(Font.font(40));
+        grid.add(btnRegister, 1, 3, 2, 1);
+        btnRegister.setOnAction(new EventHandler<ActionEvent>() {
+            HelloController hc = new HelloController();
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("Hello");
                 try {
-                    Parent p = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+                    String username = tfUsername.getText();
+                    String password = pfPassword.getText();
+                    hc.insertData(username, password);
+                    Parent p = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
                     Scene s = new Scene(p);
                     stage.setScene(s);
                     stage.show();
