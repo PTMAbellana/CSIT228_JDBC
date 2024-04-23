@@ -1,164 +1,65 @@
 package com.example.csit228_f1_v2;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
+    public static Stage primaryStage;
+
     @Override
-    public void start(Stage stage) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-//        stage.setTitle("Hello!");
-//        stage.setScene(scene);
-
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        Text txtWelcome = new Text("Welcome to CIT");
-        txtWelcome.setFont(Font.font("Chiller", FontWeight.EXTRA_BOLD, 69));
-        txtWelcome.setFill(Color.RED);
-//        grid.setAlignment();
-        grid.setPadding(new Insets(20));
-//        grid.
-        txtWelcome.setTextAlignment(TextAlignment.CENTER);
-        grid.add(txtWelcome, 0, 0, 3, 1);
-
-        Label lbUsername = new Label("Username: ");
-        lbUsername.setTextFill(Color.LIGHTSKYBLUE);
-        lbUsername.setFont(Font.font(30));
-        grid.add(lbUsername, 0, 1);
-
-        TextField tfUsername = new TextField();
-        grid.add(tfUsername, 1, 1);
-        tfUsername.setFont(Font.font(30));
-//        tfUsername.setMaxWidth(150);
-
-        Label lbPassword = new Label("Password");
-        lbPassword.setFont(Font.font(30));
-        lbPassword.setTextFill(Color.CHARTREUSE);
-        grid.add(lbPassword, 0, 2);
-
-        PasswordField pfPassword = new PasswordField();
-        pfPassword.setFont(Font.font(30));
-        grid.add(pfPassword, 1, 2);
-
-        TextField tmpPassword = new TextField(pfPassword.getText());
-        tmpPassword.setFont(Font.font(30));
-        grid.add(tmpPassword, 1, 2);
-        tmpPassword.setVisible(false);
-
-        ToggleButton btnShow = new ToggleButton("( )");
-//        btnShow.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                if (btnShow.isSelected()) {
-//                    tmpPassword.setText(pfPassword.getText());
-//                    tmpPassword.setVisible(true);
-//                } else {
-//                    tmpPassword.setVisible(false);
-//                    pfPassword.setText(tmpPassword.getText());
-//                }
-//            }
-//        });
-        btnShow.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                tmpPassword.setText(pfPassword.getText());
-                tmpPassword.setVisible(true);
-            }
-        });
-
-        EventHandler<MouseEvent> release = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                tmpPassword.setVisible(false);
-                pfPassword.setText(tmpPassword.getText());
-            }
-        };
-
-        btnShow.setOnMouseReleased(release);
-        btnShow.setOnMouseExited(release);
-        grid.add(btnShow, 2,2);
-
-        Button btnLogin = new Button("Log In");
-        btnLogin.setFont(Font.font(40));
-        grid.add(btnLogin, 0, 3, 2, 1);
-        Text check = new Text("Message:");
-        txtWelcome.setFont(Font.font("Chiller", FontWeight.EXTRA_BOLD, 69));
-        txtWelcome.setFill(Color.RED);
-        txtWelcome.setTextAlignment(TextAlignment.CENTER);
-        grid.add(check, 0, 5, 3, 1);
-
-        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
-            HelloController hc = new HelloController();
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String username = tfUsername.getText();
-                String password = pfPassword.getText();
-                if(hc.readData(username,password)){
-                    try {
-                        Parent p = FXMLLoader.load(getClass().getResource("homepage.fxml"));
-                        Scene s = new Scene(p);
-                        stage.setScene(s);
-                        stage.show();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else{
-                    check.setText("Invalid username/password");
-//                    actionTarget.setOpacity(1);
-                }
-            }
-        });
-        Button btnRegister = new Button("Register");
-        btnRegister.setFont(Font.font(40));
-        grid.add(btnRegister, 1, 3, 2, 1);
-        btnRegister.setOnAction(new EventHandler<ActionEvent>() {
-            HelloController hc = new HelloController();
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("Hello");
-                try {
-                    String username = tfUsername.getText();
-                    String password = pfPassword.getText();
-                    hc.insertData(username, password);
-                    Parent p = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
-                    Scene s = new Scene(p);
-                    stage.setScene(s);
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        Scene scene = new Scene(grid, 700, 500, Color.BLACK);
-        stage.setScene(scene);
-        scene.setFill(Color.CORNFLOWERBLUE);
-        stage.show();
-        txtWelcome.minWidth(grid.getWidth());
+    public void start(Stage primaryStage) throws IOException {
+        HelloApplication.primaryStage = primaryStage; // Assigning primary stage to the static variable
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 600, 300);
+        primaryStage.setTitle("JDBC Activity!");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
+
+    public static void setLoginScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene); // Using the static primaryStage variable
+    }
+
+    public static void setRegisterScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("register-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene); // Using the static primaryStage variable
+    }
+
+    public static void setUpdateScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("update-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene); // Using the static primaryStage variable
+    }
+    public static void setStartingScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene); // Using the static primaryStage variable
+    }
+
+    public static void setHomepageScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("homepage.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene); // Using the static primaryStage variable
+    }
+
+
 }

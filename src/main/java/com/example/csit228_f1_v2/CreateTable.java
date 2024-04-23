@@ -1,4 +1,5 @@
 package com.example.csit228_f1_v2;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +9,8 @@ public class CreateTable {
         Connection c = MySQLConnection.getConnection();
         String query = "CREATE TABLE users (" +
                 "id INT PRIMARY KEY AUTO_INCREMENT," +
+                "name VARCHAR(50) NOT NULL," +
+                "email VARCHAR(50) NOT NULL," +
                 "username VARCHAR(50) NOT NULL," +
                 "password VARCHAR(50) NOT NULL)" ;
         try {

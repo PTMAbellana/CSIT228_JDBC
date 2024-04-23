@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="registeranchorpane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228_f1_v2.RegisterView">
+   <children>
+      <Button fx:id="btnSignUp" layoutX="236.0" layoutY="281.0" mnemonicParsing="false" onAction="#signUp" text="Sign Up">
+         <font>
+            <Font name="Bookman Old Style" size="25.0" />
+         </font></Button>
+      <Label layoutX="129.0" layoutY="30.0" text="Register Form">
+         <font>
+            <Font name="Bookman Old Style" size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="114.0" text="Name">
+         <font>
+            <Font name="Bookman Old Style" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="155.0" text="Email">
+         <font>
+            <Font name="Bookman Old Style" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="191.0" text="Username">
+         <font>
+            <Font name="Book Antiqua" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="233.0" text="Password">
+         <font>
+            <Font name="Bookman Old Style" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfName" layoutX="226.0" layoutY="117.0" />
+      <TextField fx:id="tfEmail" layoutX="227.0" layoutY="158.0" />
+      <TextField fx:id="tfUsername" layoutX="228.0" layoutY="194.0" />
+      <PasswordField fx:id="pfPassword" layoutX="229.0" layoutY="236.0" />
+   </children>
+</AnchorPane>

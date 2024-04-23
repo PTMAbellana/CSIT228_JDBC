@@ -1,20 +1,46 @@
 package com.example.csit228_f1_v2;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ReadData {
-    public static void readData() {
+    public static boolean readData(String username, String password) {
         try (Connection c = MySQLConnection.getConnection();){
             Statement statement = c.createStatement();
             String query = "SELECT * FROM users";
             ResultSet res = statement.executeQuery(query); //FOR READING
             while(res.next()){
-                int id = res.getInt("id");
-                String username = res.getString("username");
-                String password = res.getString(3);
-                System.out.println("ID: " + id + "\nUsername: " + username + "\nPassword: " + password + "\n");
+                String name = res.getString("username");
+                String pass = res.getString("password");
+                if(name.equals(username) && pass.equals(password)){
+                    return true;
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return false;
     }
+
+    public static int readData(String username){
+        try(Connection c = MySQLConnection.getConnection();){
+            Statement statement = c.createStatement();
+            String query = "SELECT * FROM users";
+            ResultSet res = statement.executeQuery(query);
+            while(res.next()){
+                int id = res.getInt("id");
+                String name = res.getString("username");
+                if(name.equals(username)){
+                    return id;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+
 }
