@@ -21,6 +21,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(root, 700, 500);
         primaryStage.setTitle("JDBC Activity!");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
 
