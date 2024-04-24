@@ -26,4 +26,5 @@ public class HelloController {
         Stage stage = (Stage) HelloApplication.primaryStage.getScene().getWindow();
         HelloApplication.setLoginScene();
     }
+
 }

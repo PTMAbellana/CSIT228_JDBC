@@ -1,9 +1,12 @@
 package com.example.csit228_f1_v2;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,46 +14,74 @@ import java.sql.SQLException;
 public class UpdateData {
     public static void updateData(String username, String oldPassword, String newPassword) {
         try (Connection c = MySQLConnection.getConnection()) {
-            if (ReadData.readData(username, oldPassword)) {
-                // Prepare the update statement
-                PreparedStatement statement = c.prepareStatement(
-                        "UPDATE users SET password = ? WHERE username = ?"
-                );
+            c.setAutoCommit(false); // Begin the transaction
 
-                // Set the new password and username as parameters
-                statement.setString(1, newPassword);
-                statement.setString(2, username);
+            try {
+                if (ReadData.readData(username, oldPassword)) {
+                    PreparedStatement statement = c.prepareStatement(
+                            "UPDATE users SET password = ? WHERE username = ?"
+                    );
 
-                // Execute the update statement
-                int rowsUpdated = statement.executeUpdate();
+                    statement.setString(1, newPassword);
+                    statement.setString(2, username);
 
-                if (rowsUpdated > 0) {
-                    System.out.println("Password updated successfully.");
+                    int rowsUpdated = statement.executeUpdate();
+
+                    if (rowsUpdated > 0) {
+                        showAlert("Password updated successfully.");
+                    } else {
+                        showAlert("Failed to update password.");
+                    }
                 } else {
-                    System.out.println("Failed to update password.");
+                    showAlert("Invalid username/password.");
                 }
-            } else {
-                System.out.println("Invalid username/password.");
+
+                c.commit(); // Commit the transaction
+            } catch (SQLException e) {
+                c.rollback(); // Rollback the transaction if an exception occurs
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public static void updateProduct(int product_id, String new_name, String new_description){
-        try (
-                Connection c = MySQLConnection.getConnection();
-                PreparedStatement statement = c.prepareStatement(
-                        "UPDATE products SET prodname=?, description=? WHERE prodid=?"
-                );
-        ){
-            statement.setString(1,new_name);
-            statement.setString(2,new_description);
-            statement.setInt(3,product_id);
 
-            int updates = statement.executeUpdate();
-            System.out.println("Rows updated (Product): " + updates);
-        } catch (SQLException  e){
-            e.printStackTrace();
+    public static void updateProduct(int product_id, String new_name, Double new_price, String new_description) {
+        try (Connection c = MySQLConnection.getConnection()) {
+            c.setAutoCommit(false); // Begin the transaction
+
+            try {
+                PreparedStatement statement = c.prepareStatement(
+                        "UPDATE products SET prodname=?, price=?, description=? WHERE prodid=?"
+                );
+
+                statement.setString(1, new_name);
+                statement.setDouble(2, new_price);
+                statement.setString(3, new_description);
+                statement.setInt(4, product_id);
+
+                int updates = statement.executeUpdate();
+                if (updates > 0) {
+                    showAlert("Product updated successfully.");
+                } else {
+                    showAlert("Failed to update product.");
+                }
+
+                c.commit(); // Commit the transaction
+            } catch (SQLException e) {
+                c.rollback(); // Rollback the transaction if an exception occurs
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    private static void showAlert(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Update Status");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

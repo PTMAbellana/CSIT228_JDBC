@@ -14,10 +14,10 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        HelloApplication.primaryStage = primaryStage; // Assigning primary stage to the static variable
+        HelloApplication.primaryStage = primaryStage; //Assigning primary stage to the static variable
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 300);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setTitle("JDBC Activity!");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -26,38 +26,44 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+    public static void setHelloView() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 700, 500);
+        primaryStage.setScene(scene); // Using the static primaryStage variable
+    }
 
     public static void setLoginScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene); // Using the static primaryStage variable
     }
 
     public static void setRegisterScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("register-view.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene); // Using the static primaryStage variable
     }
 
     public static void setUpdateScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("update-view.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene); // Using the static primaryStage variable
     }
     public static void setStartingScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene); // Using the static primaryStage variable
     }
 
     public static void setHomepageScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("homepage.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene); // Using the static primaryStage variable
     }
 

@@ -35,6 +35,8 @@ public class HomeController implements Initializable{
     TextField tfProductPrice;
     @FXML
     TextArea tfProductDescription;
+    @FXML
+    Label lblMarketplace;
     protected URL loc;
     protected ResourceBundle rsbundle;
     public Label txtTitle;
@@ -46,10 +48,7 @@ public class HomeController implements Initializable{
     public Button btnSaveChanges;
     public Button btnClose_view;
     public Button btnDelete_view;
-    public TextField tfProduct_Name;
-    public Button btnCreateNote;
-    public TextArea taNoteContents;
-    public Button deleteAccnt;
+
     public AnchorPane apYourProducts;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,6 +58,7 @@ public class HomeController implements Initializable{
         rsbundle = resources;
 //        lblUsername.setTextFill(Color.WHITE);
         //lblUsername.setText(HelloApplication.current_username);
+        vbOutput.getChildren().clear();
         if (CreateTable.productListTable()) {
             ResultSet yourProducts = ReadData.all_products();
             try {
@@ -66,16 +66,17 @@ public class HomeController implements Initializable{
 //                System.out.println("Title: " + yourNotes.getString("title") + "\n" + "Content: " + yourNotes.getString("contents"));
                     int product_id = yourProducts.getInt("prodid");
                     String name = yourProducts.getString("prodname");
+                    double price = yourProducts.getDouble("price");
                     String contents = yourProducts.getString("description");
 
                     Label prodName = new Label(name);
-                    prodName.setPrefWidth(325);
+                    prodName.setPrefWidth(250);
                     Button view = new Button("View");
                     Button delete_product = new Button("Delete");
                     HBox hbox = new HBox(prodName, view, delete_product);
                     hbox.setSpacing(10);
                     vbOutput.getChildren().add(hbox);
-                    vbOutput.setSpacing(5);
+                    vbOutput.setSpacing(3);
                     view.setOnAction(new EventHandler<ActionEvent>(){
                         @Override
                         public void handle(ActionEvent actionEvent) {
@@ -83,15 +84,15 @@ public class HomeController implements Initializable{
                             apViewProduct.setVisible(true);
                             vbOutput.setVisible(false);
                             tfViewProductName.setText(name);
+                            tfProductPrice.setText(String.valueOf(price));
                             taViewProductDescription.setText(contents);
                             btnSaveChanges.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent actionEvent) {
-                                    UpdateData.updateProduct(product_id, tfViewProductName.getText(), taViewProductDescription.getText());
+                                    UpdateData.updateProduct(product_id, tfViewProductName.getText(), Double.parseDouble(tfProductPrice.getText()), taViewProductDescription.getText());
                                     // Optionally update the UI here instead of reinitializing
                                     // For example, you can update the existing label and text area
                                     prodName.setText(tfViewProductName.getText()); // Update product name label
-//                                    contents.setText(taViewProductDescription.getText()); // Update product description
                                     taViewProductDescription.setText(taViewProductDescription.getText()); // Update product description
 
                                     onCloseViewProduct();
@@ -140,15 +141,13 @@ public class HomeController implements Initializable{
             String productDescription = tfProductDescription.getText();
             //CreateTable.createProductsTable();
             InsertData.insertProductData(productName, productPrice, productDescription);
-            System.out.println("Product added successfully!"); // Parsa check ni and temporary paa
+            System.out.println("Product added successfully!");
 //            updateProductList();
             tfProductName.clear();
             tfProductPrice.clear();
             tfProductDescription.clear();
             initialize(loc, rsbundle);
         } catch (NumberFormatException e) {
-            // Handle invalid input for product price
-            // Display an error message or perform any other actions
             System.err.println("Invalid product price format!");
         }
     }
@@ -186,9 +185,11 @@ public class HomeController implements Initializable{
         if (tbNight.isSelected()) {
             tbNight.getParent().setStyle("-fx-background-color: BLACK");
             tbNight.setText("DAY");
+            lblMarketplace.setStyle("-fx-text-fill: WHITE");
         } else {
             tbNight.getParent().setStyle("-fx-background-color: WHITE");
             tbNight.setText("NIGHT");
+            lblMarketplace.setStyle("-fx-text-fill: BLACK");
         }
     }
     public void signout () {

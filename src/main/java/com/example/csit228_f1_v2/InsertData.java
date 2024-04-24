@@ -10,45 +10,78 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class InsertData {
     public static void insertData(String name, String email, String username, String password) {
-        try (Connection c = MySQLConnection.getConnection();
-             PreparedStatement statement = c.prepareStatement(
-                     "INSERT INTO users (name, email, username, password) VALUES (?,?,?,?)"
-             )){
-            statement.setString(1, name); //index starts at 1 for sql
-            statement.setString(2, email);
-            statement.setString(3, username);
-            statement.setString(4, password);
-            int rowsInserted = statement.executeUpdate(); //CREATE, UPDATE, DELETE
-            System.out.println("Rows Inserted: " + rowsInserted);
+        try (Connection c = MySQLConnection.getConnection()) {
+            // Begin transaction
+            c.setAutoCommit(false);
+
             try {
-                Parent p = FXMLLoader.load(InsertData.class.getResource("homepage.fxml"));
-                Scene s = new Scene(p);
-                Stage stage = new Stage();
-                stage.setScene(s);
-                stage.show();
-            } catch (IOException e) {
+                PreparedStatement statement = c.prepareStatement(
+                        "INSERT INTO users (name, email, username, password) VALUES (?,?,?,?)"
+                );
+                statement.setString(1, name);
+                statement.setString(2, email);
+                statement.setString(3, username);
+                statement.setString(4, password);
+                int rowsInserted = statement.executeUpdate();
+                System.out.println("Rows Inserted: " + rowsInserted);
+
+                // Commit transaction
+                c.commit();
+
+                // Show alert for successful insertion
+                showAlert(AlertType.INFORMATION, "Success", "User inserted successfully!");
+            } catch (SQLException e) {
+                // Rollback transaction if an exception occurs
+                c.rollback();
                 throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
-    public static void insertProductData( String productName, double productPrice, String productDescription) {
-        try (Connection c = MySQLConnection.getConnection();
-             PreparedStatement statement = c.prepareStatement(
-                     "INSERT INTO products (userid, prodname, price, description) VALUES (?,?,?,?)"
-             )){
-            statement.setInt(1, HomeController.loggedInID);
-            statement.setString(2, productName);
-            statement.setDouble(3, productPrice);
-            statement.setString(4, productDescription);
-            int rowsInserted = statement.executeUpdate();
-            System.out.println("Rows Inserted: " + rowsInserted);
+
+    public static void insertProductData(String productName, double productPrice, String productDescription) {
+        try (Connection c = MySQLConnection.getConnection()) {
+            // Begin transaction
+            c.setAutoCommit(false);
+
+            try {
+                PreparedStatement statement = c.prepareStatement(
+                        "INSERT INTO products (userid, prodname, price, description) VALUES (?,?,?,?)"
+                );
+                statement.setInt(1, HomeController.loggedInID);
+                statement.setString(2, productName);
+                statement.setDouble(3, productPrice);
+                statement.setString(4, productDescription);
+                int rowsInserted = statement.executeUpdate();
+                System.out.println("Rows Inserted: " + rowsInserted);
+
+                // Commit transaction
+                c.commit();
+
+                // Show alert for successful insertion
+                showAlert(AlertType.INFORMATION, "Success", "Product inserted successfully!");
+            } catch (SQLException e) {
+                // Rollback transaction if an exception occurs
+                c.rollback();
+                throw new RuntimeException(e);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Helper method to display an alert
+    private static void showAlert(AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

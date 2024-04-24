@@ -6,7 +6,7 @@ public class CreateTable {
     public static void main(String[] args) {
         Connection c = MySQLConnection.getConnection();
         try {
-            //createUsersTable(c);
+            createUsersTable(c);
             createProductsTable(c);
             System.out.println("Tables have been created successfully.");
         } catch (SQLException e) {

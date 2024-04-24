@@ -40,5 +40,9 @@ public class LoginView {
 //                    actionTarget.setOpacity(1);
         }
     }
+    public void backToHelloView() throws IOException {
+        Stage stage = (Stage) HelloApplication.primaryStage.getScene().getWindow();
+        HelloApplication.setHelloView();
+    }
 
 }
