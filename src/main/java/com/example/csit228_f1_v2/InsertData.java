@@ -36,4 +36,19 @@ public class InsertData {
         }
 
     }
+    public static void insertProductData( String productName, double productPrice, String productDescription) {
+        try (Connection c = MySQLConnection.getConnection();
+             PreparedStatement statement = c.prepareStatement(
+                     "INSERT INTO products (userid, prodname, price, description) VALUES (?,?,?,?)"
+             )){
+            statement.setInt(1, HomeController.loggedInID);
+            statement.setString(2, productName);
+            statement.setDouble(3, productPrice);
+            statement.setString(4, productDescription);
+            int rowsInserted = statement.executeUpdate();
+            System.out.println("Rows Inserted: " + rowsInserted);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -36,4 +36,21 @@ public class UpdateData {
             throw new RuntimeException(e);
         }
     }
+    public static void updateProduct(int product_id, String new_name, String new_description){
+        try (
+                Connection c = MySQLConnection.getConnection();
+                PreparedStatement statement = c.prepareStatement(
+                        "UPDATE products SET prodname=?, description=? WHERE prodid=?"
+                );
+        ){
+            statement.setString(1,new_name);
+            statement.setString(2,new_description);
+            statement.setInt(3,product_id);
+
+            int updates = statement.executeUpdate();
+            System.out.println("Rows updated (Product): " + updates);
+        } catch (SQLException  e){
+            e.printStackTrace();
+        }
+    }
 }

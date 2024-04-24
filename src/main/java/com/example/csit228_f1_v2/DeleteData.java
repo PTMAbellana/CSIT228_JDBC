@@ -35,5 +35,34 @@ public class DeleteData {
             e.printStackTrace();
         }
     }
+    public static void deleteProduct(int id){
+        try (
+                Connection c = MySQLConnection.getConnection();
+                PreparedStatement statement = c.prepareStatement(
+                        "DELETE FROM products WHERE prodid=?"
+                );
+        ){
+            statement.setInt(1, id);
+            int ctr = statement.executeUpdate();
+            System.out.println("Deleted rows: " + ctr);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteAllProducts(int id){
+        try (
+                Connection c = MySQLConnection.getConnection();
+                PreparedStatement statement = c.prepareStatement(
+                        "DELETE FROM products WHERE userid=?"
+                );
+        ){
+            statement.setInt(1, id);
+            int ctr = statement.executeUpdate();
+            System.out.println("Deleted rows: " + ctr);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
 

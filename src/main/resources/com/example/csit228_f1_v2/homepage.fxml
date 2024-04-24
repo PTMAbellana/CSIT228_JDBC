@@ -1,24 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="lblUsername" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228_f1_v2.HomeController">
+<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228_f1_v2.HomeController">
     <children>
-        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="386.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-        <ProgressBar fx:id="pbProgress" layoutX="319.0" layoutY="326.0" prefWidth="200.0" progress="0.33" />
-        <ProgressIndicator fx:id="piProgress" layoutX="550.0" layoutY="306.0" progress="0.9" />
-        <Slider fx:id="slSlider" layoutX="319.0" layoutY="299.0" onMouseDragged="#onSliderChange" value="90.0" />
-        <ToggleButton fx:id="tbNight" layoutX="367.0" layoutY="33.0" mnemonicParsing="false" onAction="#onNightModeClick" text="Night Mode" />
-      <Button fx:id="btnSignout" layoutX="498.0" layoutY="33.0" mnemonicParsing="false" onAction="#signout" text="Log Out" />
-      <Button fx:id="deleteUser" layoutX="44.0" layoutY="300.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="26.0" prefWidth="120.0" text="Delete Account" />
-      <Button fx:id="btnUpdate" layoutX="44.0" layoutY="345.0" mnemonicParsing="false" onAction="#updateAccount" prefHeight="26.0" prefWidth="120.0" text="Update Password" />
-      <Label layoutX="44.0" layoutY="37.0" prefHeight="43.0" prefWidth="200.0" text="Username">
-         <font>
-            <Font name="Bookman Old Style" size="36.0" />
-         </font>
-      </Label>
+      <Button fx:id="btnDeleteAllProducts" layoutX="28.0" layoutY="363.0" mnemonicParsing="false" onAction="#onDeleteAllProducts" prefHeight="26.0" prefWidth="138.0" text="Delete All Products" />
+        <!-- Main Header -->
+        <Label fx:id="lblMarketplace" layoutX="24.0" layoutY="23.0" prefHeight="43.0" prefWidth="314.0" text="MARKETPLACE">
+            <font>
+                <Font name="Bookman Old Style Bold" size="36.0" />
+            </font>
+        </Label>
+
+        <!-- ToolBar -->
+        <ToolBar layoutX="324.0" layoutY="69.0" prefHeight="40.0" prefWidth="259.0">
+            <items>
+                <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateAccount" prefHeight="26.0" prefWidth="120.0" text="Update Password" />
+                <Button fx:id="deleteUser" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="26.0" prefWidth="120.0" text="Delete Account" />
+            </items>
+        </ToolBar>
+
+        <!-- Add Product Section -->
+        <Label layoutX="24.0" layoutY="110.0" text="Add a New Product">
+            <font>
+                <Font name="Bookman Old Style" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="24.0" layoutY="136.0" text="Product Name: ">
+            <font>
+                <Font name="Bookman Old Style" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="28.0" layoutY="187.0" text="Product Price:">
+            <font>
+                <Font name="Bookman Old Style" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="25.0" layoutY="236.0" text="Description:">
+            <font>
+                <Font name="Bookman Old Style" size="12.0" />
+            </font>
+        </Label>
+        <TextField fx:id="tfProductName" layoutX="26.0" layoutY="155.0" prefHeight="26.0" prefWidth="138.0" />
+        <TextField fx:id="tfProductPrice" layoutX="24.0" layoutY="203.0" prefHeight="26.0" prefWidth="138.0" />
+        <TextArea fx:id="tfProductDescription" layoutX="25.0" layoutY="253.0" prefHeight="70.0" prefWidth="138.0" />
+        <Button fx:id="btnAddProduct" cancelButton="true" layoutX="28.0" layoutY="332.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="26.0" prefWidth="138.0" text="Add Product" />
+
+        <!-- Log Out and Night Mode Controls -->
+        <Button fx:id="btnSignout" layoutX="525.0" layoutY="32.0" mnemonicParsing="false" onAction="#signout" text="Log Out" />
+        <ToggleButton fx:id="tbNight" layoutX="438.0" layoutY="34.0" mnemonicParsing="false" onAction="#onNightModeClick" text="Night Mode" />
+
+        <!-- Your Products Section -->
+        <AnchorPane fx:id="apYourProducts" layoutX="207.0" layoutY="129.0" prefHeight="245.0" prefWidth="376.0">
+            <children>
+                <!-- VBox to display products -->
+                <VBox fx:id="vbOutput" layoutX="7.0" layoutY="7.0" prefHeight="231.0" prefWidth="362.0" />
+                      <!-- AnchorPane for viewing a product -->
+                      <AnchorPane fx:id="apViewProduct" prefHeight="246.0" prefWidth="376.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" visible="false">
+                          <children>
+                              <!-- UI components for viewing a product -->
+                              <TextField fx:id="tfViewProductName" layoutX="22.0" layoutY="28.0" prefHeight="26.0" prefWidth="150.0" promptText="Name" />
+                              <TextArea fx:id="taViewProductDescription" layoutX="22.0" layoutY="67.0" prefHeight="127.0" prefWidth="327.0" promptText="Description" wrapText="true" />
+                              <Button fx:id="btnSaveChanges" layoutX="246.0" layoutY="207.0" mnemonicParsing="false" text="Save" />
+                              <Button fx:id="btnDelete_view" layoutX="298.0" layoutY="207.0" mnemonicParsing="false" text="Delete" />
+                              <Button fx:id="btnClose_view" layoutX="337.0" layoutY="15.0" mnemonicParsing="false" onAction="#onCloseViewProduct" text="X" />
+                          </children>
+                      </AnchorPane>
+            </children>
+        </AnchorPane>
+<!--      <AnchorPane fx:id="apYourProducts" layoutX="217.0" layoutY="139.0" prefHeight="245.0" prefWidth="376.0">-->
+<!--         <children>-->
+<!--            <VBox fx:id="vbOutput" layoutX="7.0" layoutY="24.0" prefHeight="207.0" prefWidth="362.0">-->
+<!--               <children>-->
+<!--                  <AnchorPane fx:id="apViewProduct" prefHeight="246.0" prefWidth="376.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" visible="false">-->
+<!--                     <children>-->
+<!--                        <TextField layoutX="22.0" layoutY="28.0" prefHeight="26.0" prefWidth="150.0" />-->
+<!--                        <TextArea layoutX="22.0" layoutY="67.0" prefHeight="127.0" prefWidth="327.0" />-->
+<!--                        <Button layoutX="246.0" layoutY="207.0" mnemonicParsing="false" text="Save" />-->
+<!--                        <Button layoutX="298.0" layoutY="207.0" mnemonicParsing="false" text="Delete" />-->
+<!--                        <Button layoutX="337.0" layoutY="15.0" mnemonicParsing="false" text="X" />-->
+<!--                     </children>-->
+<!--                  </AnchorPane>-->
+<!--               </children></VBox>-->
+<!--         </children>-->
+<!--      </AnchorPane>-->
     </children>
 </AnchorPane>
