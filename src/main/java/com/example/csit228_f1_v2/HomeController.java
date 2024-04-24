@@ -106,12 +106,6 @@ public class HomeController implements Initializable{
                                         showAlert("Invalid product price format");
                                     }
 
-//                                    UpdateData.updateProduct(product_id, tfViewProductName.getText(), Double.parseDouble(tfViewProductPrice.getText()), taViewProductDescription.getText());
-//                                    prodName.setText(tfViewProductName.getText()); // Update product name label
-//
-//                                    tfViewProductName.setText(tfProductName.getText());
-//                                    tfViewProductPrice.setText(tfProductPrice.getText());
-//                                    taViewProductDescription.setText(taViewProductDescription.getText()); // Update product description
                                     initialize(loc, rsbundle);
                                     onCloseViewProduct();
                                 }
@@ -121,7 +115,6 @@ public class HomeController implements Initializable{
                                 @Override
                                 public void handle(ActionEvent actionEvent) {
                                     onDeleteProduct(product_id);
-                                    // Optionally update the UI here instead of reinitializing
                                     vbOutput.getChildren().remove(hbox); // Remove the hbox from the VBox
                                     onCloseViewProduct();
                                 }
@@ -156,11 +149,9 @@ public class HomeController implements Initializable{
             String productName = tfProductName.getText();
             double productPrice = Double.parseDouble(tfProductPrice.getText());
             String productDescription = taProductDescription.getText();
-            //CreateTable.createProductsTable();
 
             InsertData.insertProductData(productName, productPrice, productDescription);
             System.out.println("Product added successfully!");
-//            updateProductList();
             tfProductName.clear();
             tfProductPrice.clear();
             taProductDescription.clear();
@@ -241,18 +232,4 @@ public class HomeController implements Initializable{
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-//    private void updateProductList () {
-//        // Fetch the updated list of products
-//        List<Product> productList = ReadData.readProductsByUserId(loggedInID);
-//
-//        // Clear the existing product list UI
-//        productTable.getItems().clear();
-//
-//        // Add the updated product list to the table view
-//        productTable.getItems().addAll(productList);
-//    }
-
-
-
 }
