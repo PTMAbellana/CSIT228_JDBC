@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +36,7 @@ public class HomeController implements Initializable{
     @FXML
     TextField tfProductPrice;
     @FXML
-    TextArea tfProductDescription;
+    TextArea taProductDescription;
     @FXML
     Label lblMarketplace;
     protected URL loc;
@@ -42,9 +44,11 @@ public class HomeController implements Initializable{
     public Label txtTitle;
     public VBox vbOutput;
     public AnchorPane apViewProduct;
+
     public TextField tfViewProductName;
     public TextField tfViewProductPrice;
     public TextArea taViewProductDescription;
+
     public Button btnSaveChanges;
     public Button btnClose_view;
     public Button btnDelete_view;
@@ -52,12 +56,9 @@ public class HomeController implements Initializable{
     public AnchorPane apYourProducts;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
-//        loader.setController(this);
         loc = location;
         rsbundle = resources;
-//        lblUsername.setTextFill(Color.WHITE);
-        //lblUsername.setText(HelloApplication.current_username);
+
         vbOutput.getChildren().clear();
         if (CreateTable.productListTable()) {
             ResultSet yourProducts = ReadData.all_products();
@@ -70,9 +71,13 @@ public class HomeController implements Initializable{
                     String contents = yourProducts.getString("description");
 
                     Label prodName = new Label(name);
-                    prodName.setPrefWidth(250);
+                    prodName.setPrefWidth(260);
                     Button view = new Button("View");
+                    view.setStyle("-fx-background-color: #8b0000; -fx-text-fill: white; ");
+                    view.setFont(Font.font("Book Antiqua", FontWeight.EXTRA_BOLD,12));
                     Button delete_product = new Button("Delete");
+                    delete_product.setStyle("-fx-background-color: #8b0000; -fx-text-fill: white;");
+                    delete_product.setFont(Font.font("Book Antiqua", FontWeight.EXTRA_BOLD,12));
                     HBox hbox = new HBox(prodName, view, delete_product);
                     hbox.setSpacing(10);
                     vbOutput.getChildren().add(hbox);
@@ -84,17 +89,31 @@ public class HomeController implements Initializable{
                             apViewProduct.setVisible(true);
                             vbOutput.setVisible(false);
                             tfViewProductName.setText(name);
-                            tfProductPrice.setText(String.valueOf(price));
+                            tfViewProductPrice.setText(String.valueOf(price));
                             taViewProductDescription.setText(contents);
                             btnSaveChanges.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent actionEvent) {
-                                    UpdateData.updateProduct(product_id, tfViewProductName.getText(), Double.parseDouble(tfProductPrice.getText()), taViewProductDescription.getText());
-                                    // Optionally update the UI here instead of reinitializing
-                                    // For example, you can update the existing label and text area
-                                    prodName.setText(tfViewProductName.getText()); // Update product name label
-                                    taViewProductDescription.setText(taViewProductDescription.getText()); // Update product description
+                                    Double product_price;
+                                    try{
+                                        product_price = Double.parseDouble(tfViewProductPrice.getText());
+                                        UpdateData.updateProduct(product_id, tfViewProductName.getText(), product_price, taViewProductDescription.getText());
+                                        prodName.setText(tfViewProductName.getText()); // Update product name label
 
+                                        tfViewProductName.setText(tfProductName.getText());
+                                        tfViewProductPrice.setText(tfProductPrice.getText());
+                                        taViewProductDescription.setText(taViewProductDescription.getText()); // Update product description
+                                    }catch (NumberFormatException e){
+                                        showAlert("Invalid product price format");
+                                    }
+
+//                                    UpdateData.updateProduct(product_id, tfViewProductName.getText(), Double.parseDouble(tfViewProductPrice.getText()), taViewProductDescription.getText());
+//                                    prodName.setText(tfViewProductName.getText()); // Update product name label
+//
+//                                    tfViewProductName.setText(tfProductName.getText());
+//                                    tfViewProductPrice.setText(tfProductPrice.getText());
+//                                    taViewProductDescription.setText(taViewProductDescription.getText()); // Update product description
+                                    initialize(loc, rsbundle);
                                     onCloseViewProduct();
                                 }
                             });
@@ -113,7 +132,7 @@ public class HomeController implements Initializable{
                     delete_product.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
-                            System.out.println("delete btn pressed! prod_id: " + product_id);
+                            System.out.println("delete prod_id: " + product_id);
                             onDeleteProduct(product_id);
                             initialize(loc, rsbundle);
                         }
@@ -138,16 +157,19 @@ public class HomeController implements Initializable{
         try {
             String productName = tfProductName.getText();
             double productPrice = Double.parseDouble(tfProductPrice.getText());
-            String productDescription = tfProductDescription.getText();
+            String productDescription = taProductDescription.getText();
             //CreateTable.createProductsTable();
+
             InsertData.insertProductData(productName, productPrice, productDescription);
             System.out.println("Product added successfully!");
 //            updateProductList();
             tfProductName.clear();
             tfProductPrice.clear();
-            tfProductDescription.clear();
+            taProductDescription.clear();
+
             initialize(loc, rsbundle);
         } catch (NumberFormatException e) {
+            showAlert("Invalid product price format.");
             System.err.println("Invalid product price format!");
         }
     }
@@ -214,7 +236,13 @@ public class HomeController implements Initializable{
             throw new RuntimeException(e);
         }
     }
-
+    private static void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Update Status");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 //    private void updateProductList () {
 //        // Fetch the updated list of products

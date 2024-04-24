@@ -15,13 +15,11 @@ public class UpdateData {
     public static void updateData(String username, String oldPassword, String newPassword) {
         try (Connection c = MySQLConnection.getConnection()) {
             c.setAutoCommit(false); // Begin the transaction
-
             try {
                 if (ReadData.readData(username, oldPassword)) {
                     PreparedStatement statement = c.prepareStatement(
                             "UPDATE users SET password = ? WHERE username = ?"
                     );
-
                     statement.setString(1, newPassword);
                     statement.setString(2, username);
 
@@ -54,7 +52,6 @@ public class UpdateData {
                 PreparedStatement statement = c.prepareStatement(
                         "UPDATE products SET prodname=?, price=?, description=? WHERE prodid=?"
                 );
-
                 statement.setString(1, new_name);
                 statement.setDouble(2, new_price);
                 statement.setString(3, new_description);

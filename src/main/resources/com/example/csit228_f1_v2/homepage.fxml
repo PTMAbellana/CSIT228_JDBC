@@ -43,7 +43,7 @@
         </Label>
         <TextField fx:id="tfProductName" layoutX="42.0" layoutY="180.0" prefHeight="26.0" prefWidth="196.0" />
         <TextField fx:id="tfProductPrice" layoutX="40.0" layoutY="233.0" prefHeight="26.0" prefWidth="196.0" />
-        <TextArea fx:id="tfProductDescription" layoutX="42.0" layoutY="283.0" prefHeight="84.0" prefWidth="196.0" />
+        <TextArea fx:id="taProductDescription" layoutX="42.0" layoutY="283.0" prefHeight="84.0" prefWidth="196.0" />
         <Button fx:id="btnAddProduct" cancelButton="true" layoutX="39.0" layoutY="389.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="26.0" prefWidth="196.0" style="-fx-background-color: #8b0000;" text="Add Product" textFill="WHITE">
          <font>
             <Font name="Book Antiqua Bold" size="12.0" />
@@ -66,10 +66,19 @@
                         <TextField fx:id="tfViewProductName" layoutX="22.0" layoutY="28.0" prefHeight="26.0" prefWidth="184.0" promptText="Name" />
                         <TextField fx:id="tfViewProductPrice" layoutX="22.0" layoutY="67.0" prefHeight="26.0" prefWidth="150.0" promptText="Price" />
                         <TextArea fx:id="taViewProductDescription" layoutX="22.0" layoutY="107.0" prefHeight="160.0" prefWidth="360.0" promptText="Description" wrapText="true" />
-                        <Button fx:id="btnSaveChanges" layoutX="250.0" layoutY="290.0" mnemonicParsing="false" prefWidth="50.0" text="Save" />
-                        <Button fx:id="btnDelete_view" layoutX="310.0" layoutY="290.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="btnSaveChanges" layoutX="250.0" layoutY="290.0" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #8b0000;" text="Save" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua Bold" size="12.0" />
+                     </font></Button>
+                        <Button fx:id="btnDelete_view" layoutX="310.0" layoutY="290.0" mnemonicParsing="false" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua Bold" size="12.0" />
+                     </font></Button>
                         <!-- Close button -->
-                        <Button fx:id="btnClose_view" layoutX="350.0" layoutY="15.0" mnemonicParsing="false" onAction="#onCloseViewProduct" text="X" />
+                        <Button fx:id="btnClose_view" layoutX="350.0" layoutY="15.0" mnemonicParsing="false" onAction="#onCloseViewProduct" style="-fx-background-color: #8b0000;" text="X" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua Bold" size="12.0" />
+                     </font></Button>
                     </children>
                 </AnchorPane>
             </children>

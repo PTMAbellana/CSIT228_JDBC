@@ -21,7 +21,7 @@
             <Font name="Bookman Old Style Bold" size="24.0" />
          </font>
       </Button>
-      <Label fx:id="lblcheck" layoutX="348.0" layoutY="221.0" prefHeight="18.0" prefWidth="210.0" />
+      <Label fx:id="lblcheck" layoutX="344.0" layoutY="204.0" prefHeight="18.0" prefWidth="210.0" />
       <Label layoutX="163.0" layoutY="35.0" text="MARKETPLACE">
          <font>
             <Font name="Bookman Old Style Bold" size="48.0" />
