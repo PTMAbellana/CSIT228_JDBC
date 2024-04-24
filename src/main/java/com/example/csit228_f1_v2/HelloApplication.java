@@ -14,6 +14,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        CreateTable.createTables();
         HelloApplication.primaryStage = primaryStage; //Assigning primary stage to the static variable
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Parent root = fxmlLoader.load();
@@ -21,6 +22,8 @@ public class HelloApplication extends Application {
         primaryStage.setTitle("JDBC Activity!");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
     }
 
     public static void main(String[] args) {

@@ -85,7 +85,6 @@ public class HomeController implements Initializable{
                     view.setOnAction(new EventHandler<ActionEvent>(){
                         @Override
                         public void handle(ActionEvent actionEvent) {
-                            System.out.println("view btn pressed! prod_id: " + product_id);
                             apViewProduct.setVisible(true);
                             vbOutput.setVisible(false);
                             tfViewProductName.setText(name);
@@ -132,7 +131,6 @@ public class HomeController implements Initializable{
                     delete_product.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
-                            System.out.println("delete prod_id: " + product_id);
                             onDeleteProduct(product_id);
                             initialize(loc, rsbundle);
                         }
