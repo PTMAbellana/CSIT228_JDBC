@@ -50,7 +50,7 @@
 
         <!-- Log Out and Night Mode Controls -->
         <Button fx:id="btnSignout" layoutX="525.0" layoutY="32.0" mnemonicParsing="false" onAction="#signout" text="Log Out" />
-        <ToggleButton fx:id="tbNight" layoutX="438.0" layoutY="34.0" mnemonicParsing="false" onAction="#onNightModeClick" text="Night Mode" />
+        <ToggleButton fx:id="tbNight" layoutX="435.0" layoutY="32.0" mnemonicParsing="false" onAction="#onNightModeClick" text="Night Mode" />
 
         <!-- Your Products Section -->
         <AnchorPane fx:id="apYourProducts" layoutX="207.0" layoutY="129.0" prefHeight="245.0" prefWidth="376.0">

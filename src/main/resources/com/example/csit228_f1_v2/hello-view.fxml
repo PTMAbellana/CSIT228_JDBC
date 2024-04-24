@@ -6,12 +6,23 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228_f1_v2.HelloController">
    <children>
-      <Button fx:id="btnLogin" layoutX="142.0" layoutY="168.0" mnemonicParsing="false" onAction="#login" prefHeight="64.0" prefWidth="97.0" text="Login" />
-      <Label fx:id="loginregisteranchorpane" layoutX="59.0" layoutY="37.0" text="Login and Register">
+      <Button fx:id="btnLogin" layoutX="141.0" layoutY="212.0" mnemonicParsing="false" onAction="#login" prefHeight="64.0" prefWidth="152.0" style="-fx-background-color: #22223b;" text="Login" textFill="WHITE">
          <font>
-            <Font name="Bookman Old Style" size="53.0" />
+            <Font name="Bookman Old Style Bold" size="24.0" />
+         </font></Button>
+      <Label fx:id="loginregisteranchorpane" layoutX="184.0" layoutY="111.0" text="Login and Register">
+         <font>
+            <Font name="Bookman Old Style" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="btnRegister" layoutX="347.0" layoutY="168.0" mnemonicParsing="false" onAction="#register" prefHeight="64.0" prefWidth="98.0" text="Register" />
+      <Button fx:id="btnRegister" layoutX="301.0" layoutY="212.0" mnemonicParsing="false" onAction="#register" prefHeight="64.0" prefWidth="152.0" style="-fx-background-color: #22223b;" text="Register" textFill="WHITE">
+         <font>
+            <Font name="Bookman Old Style Bold" size="24.0" />
+         </font></Button>
+      <Label fx:id="loginregisteranchorpane1" layoutX="116.0" layoutY="54.0" text="MARKETPLACE">
+         <font>
+            <Font name="Bookman Old Style Bold" size="48.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

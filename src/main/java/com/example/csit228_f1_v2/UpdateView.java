@@ -17,10 +17,18 @@ public class UpdateView {
     PasswordField pfOldPassword;
     @FXML
     PasswordField pfNewPassword;
+    @FXML
+    Button btnBackToHomePage;
     public void changePassword() throws IOException {
         String username = tfUsername.getText();
         String oldPassword = pfOldPassword.getText();
         String newPassword = pfNewPassword.getText();
         UpdateData.updateData(username,oldPassword, newPassword);
     }
+
+    public void BackToHomePage() throws IOException {
+        Stage stage = (Stage) HelloApplication.primaryStage.getScene().getWindow();
+        HelloApplication.setHomepageScene();
+    }
+
 }
